@@ -3089,10 +3089,14 @@ function SwapPlugin() {
       completed(true);
       cancel();
     },
-    drop: function drop(_ref3) {
-      var activeSortable = _ref3.activeSortable,
+    drop: function drop(evt) {
+      console.log(evt);
+
+      var _ref3 = _toConsumableArray(evt),
+          activeSortable = _ref3.activeSortable,
           putSortable = _ref3.putSortable,
           dragEl = _ref3.dragEl;
+
       var toSortable = putSortable || this.sortable;
       var options = this.options;
       lastSwapEl && toggleClass(lastSwapEl, options.swapClass, false);
@@ -3102,6 +3106,8 @@ function SwapPlugin() {
           toSortable.captureAnimationState();
           if (toSortable !== activeSortable) activeSortable.captureAnimationState();
           swapNodes(dragEl, lastSwapEl);
+          var destinationDragIndex = index(lastSwapEl);
+          console.log();
           toSortable.animateAll();
           if (toSortable !== activeSortable) activeSortable.animateAll();
         }

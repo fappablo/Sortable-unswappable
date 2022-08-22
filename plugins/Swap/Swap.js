@@ -39,7 +39,9 @@ function SwapPlugin() {
 			completed(true);
 			cancel();
 		},
-		drop({ activeSortable, putSortable, dragEl }) {
+		drop(evt) {
+			console.log(evt);
+			let { activeSortable, putSortable, dragEl } = [...evt];
 			let toSortable = (putSortable || this.sortable);
 			let options = this.options;
 			lastSwapEl && toggleClass(lastSwapEl, options.swapClass, false);
@@ -48,7 +50,8 @@ function SwapPlugin() {
 					toSortable.captureAnimationState();
 					if (toSortable !== activeSortable) activeSortable.captureAnimationState();
 					swapNodes(dragEl, lastSwapEl);
-
+					let destinationDragIndex = index(lastSwapEl);
+					console.log();
 					toSortable.animateAll();
 					if (toSortable !== activeSortable) activeSortable.animateAll();
 				}
