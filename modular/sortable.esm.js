@@ -2151,8 +2151,9 @@ Sortable.prototype =
       evt: evt
     });
     parentEl = dragEl && dragEl.parentNode; // Get again after plugin event
+    // newIndex = index(dragEl);
 
-    newIndex = index(dragEl);
+    newIndex = evt.destinationDragIndex;
     newDraggableIndex = index(dragEl, options.draggable);
 
     if (Sortable.eventCanceled) {
@@ -3104,10 +3105,10 @@ function SwapPlugin() {
       if (lastSwapEl && (options.swap || putSortable && putSortable.options.swap)) {
         if (dragEl !== lastSwapEl) {
           toSortable.captureAnimationState();
-          if (toSortable !== activeSortable) activeSortable.captureAnimationState();
-          swapNodes(dragEl, lastSwapEl);
+          if (toSortable !== activeSortable) activeSortable.captureAnimationState(); // swapNodes(dragEl, lastSwapEl);
+
           var destinationDragIndex = index(lastSwapEl);
-          console.log();
+          evt.destinationDragIndex = destinationDragIndex;
           toSortable.animateAll();
           if (toSortable !== activeSortable) activeSortable.animateAll();
         }
@@ -3125,23 +3126,6 @@ function SwapPlugin() {
       };
     }
   });
-}
-
-function swapNodes(n1, n2) {
-  var p1 = n1.parentNode,
-      p2 = n2.parentNode,
-      i1,
-      i2;
-  if (!p1 || !p2 || p1.isEqualNode(n2) || p2.isEqualNode(n1)) return;
-  i1 = index(n1);
-  i2 = index(n2);
-
-  if (p1.isEqualNode(p2) && i1 < i2) {
-    i2++;
-  }
-
-  p1.insertBefore(n2, p1.children[i1]);
-  p2.insertBefore(n1, p2.children[i2]);
 }
 
 var multiDragElements = [],

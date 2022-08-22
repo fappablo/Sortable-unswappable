@@ -49,9 +49,9 @@ function SwapPlugin() {
 				if (dragEl !== lastSwapEl) {
 					toSortable.captureAnimationState();
 					if (toSortable !== activeSortable) activeSortable.captureAnimationState();
-					swapNodes(dragEl, lastSwapEl);
+					// swapNodes(dragEl, lastSwapEl);
 					let destinationDragIndex = index(lastSwapEl);
-					console.log();
+					evt.destinationDragIndex = destinationDragIndex;
 					toSortable.animateAll();
 					if (toSortable !== activeSortable) activeSortable.animateAll();
 				}
