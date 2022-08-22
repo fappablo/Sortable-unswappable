@@ -15,14 +15,9 @@
 
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
-
-      if (enumerableOnly) {
-        symbols = symbols.filter(function (sym) {
-          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        });
-      }
-
-      keys.push.apply(keys, symbols);
+      enumerableOnly && (symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      })), keys.push.apply(keys, symbols);
     }
 
     return keys;
@@ -30,19 +25,12 @@
 
   function _objectSpread2(target) {
     for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i] != null ? arguments[i] : {};
-
-      if (i % 2) {
-        ownKeys(Object(source), true).forEach(function (key) {
-          _defineProperty(target, key, source[key]);
-        });
-      } else if (Object.getOwnPropertyDescriptors) {
-        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-      } else {
-        ownKeys(Object(source)).forEach(function (key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-      }
+      var source = null != arguments[i] ? arguments[i] : {};
+      i % 2 ? ownKeys(Object(source), !0).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
     }
 
     return target;
@@ -51,17 +39,11 @@
   function _typeof(obj) {
     "@babel/helpers - typeof";
 
-    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-      _typeof = function (obj) {
-        return typeof obj;
-      };
-    } else {
-      _typeof = function (obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-      };
-    }
-
-    return _typeof(obj);
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+      return typeof obj;
+    } : function (obj) {
+      return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
   }
 
   function _defineProperty(obj, key, value) {
@@ -80,7 +62,7 @@
   }
 
   function _extends() {
-    _extends = Object.assign || function (target) {
+    _extends = Object.assign ? Object.assign.bind() : function (target) {
       for (var i = 1; i < arguments.length; i++) {
         var source = arguments[i];
 
@@ -93,7 +75,6 @@
 
       return target;
     };
-
     return _extends.apply(this, arguments);
   }
 
@@ -3126,7 +3107,6 @@
           if (dragEl !== lastSwapEl) {
             toSortable.captureAnimationState();
             if (toSortable !== activeSortable) activeSortable.captureAnimationState();
-            swapNodes(dragEl, lastSwapEl);
             toSortable.animateAll();
             if (toSortable !== activeSortable) activeSortable.animateAll();
           }
@@ -3144,23 +3124,6 @@
         };
       }
     });
-  }
-
-  function swapNodes(n1, n2) {
-    var p1 = n1.parentNode,
-        p2 = n2.parentNode,
-        i1,
-        i2;
-    if (!p1 || !p2 || p1.isEqualNode(n2) || p2.isEqualNode(n1)) return;
-    i1 = index(n1);
-    i2 = index(n2);
-
-    if (p1.isEqualNode(p2) && i1 < i2) {
-      i2++;
-    }
-
-    p1.insertBefore(n2, p1.children[i1]);
-    p2.insertBefore(n1, p2.children[i2]);
   }
 
   var multiDragElements = [],
